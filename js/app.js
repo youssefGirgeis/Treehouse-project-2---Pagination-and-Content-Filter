@@ -1,48 +1,60 @@
-//var numberOfStudents = document.getElementsByClassName('student-item').length;
-//var numberOfPages = Math.floor(numberOfStudents/10);
 
-var numberOfStudents = $('.student-item').length;
-var numberOfPages = Math.ceil(numberOfStudents/10);
-var listOfStudents = $('.student-list');
-var btn = document.getElementById('search-button');
-var input = document.getElementsByTagName('input')[0];
+var mainPage = document.getElementsByClassName('page')[0];
+var studentList = document.getElementsByClassName('student-list')[0];
+var studentNumber = studentList.children.length;
+var pagesNumber;
+var pagesList;
+var studentListlAsArray = Array.prototype.slice.call(studentList.children);
 
+//studentListlAsArray.style.display = 'none';
 
-listOfStudents.children().css('display', 'none');
-listOfStudents.children().slice(0,10).css('display', 'block');
-//console.log(listOfStudents.children().slice(10,22));
+//studentList.style.display = 'none';
 
+function activePage(){
 
+	for(var i=0; i<pagesList; i++){
 
-$('.page').append('<ul class="pagination"></ul>');
+	}
 
-for(var i=1; i<=numberOfPages; i++){
-    $('.pagination').append('<li><a href="#">' + i + '</a></li>');
 }
 
-$('.pagination li a').first().addClass('active');
-//$('.student-item').slice(0,11);
+for(var i=10; i<studentNumber; i++){
 
+	studentList.children[i].style.display = 'none';
+}
 
+function calculatePagesNumber(students){
+	console.log(students);
+	pagesNumber = Math.ceil(studentNumber/10);
 
-$('.pagination li a').click(function(){
-    listOfStudents.children().css('display', 'none');
-    $('.pagination').find('a').removeClass('active');
-    $(this).addClass('active');
-    
-    //console.log(parseInt($(this).text()) + 10);
-    
-    var pageNumber = parseInt($(this).text());
-    //console.log(pageNumber);
-    
-    if(pageNumber === 1){
-        listOfStudents.children().slice(0,10).css('display', 'block');
-    }
-    else{
-    
-        listOfStudents.children().slice((pageNumber*10)-10,pageNumber*10).css('display', 'block');
-    }
-});
+}
+
+function pagination(studentNumber){
+
+	calculatePagesNumber(studentNumber);
+
+	pagesList = document.createElement('ul');
+	//document.body.appendChild(pagesList);
+	pagesList.setAttribute('class', 'pagination');
+
+	for(var i=0; i<pagesNumber; i++){
+
+		var page = document.createElement('li');
+		var linkNumber = document.createElement('a');
+		var number = document.createTextNode(i+1);
+		linkNumber.appendChild(number);
+		page.appendChild(linkNumber);
+		pagesList.appendChild(page);
+		mainPage.appendChild(pagesList);
+	}
+	//$('.pagination li a').first().addClass('active');
+	var a = document.getElementsByClassName('pagination')[0].children[0].querySelector('a');
+	a.classList.add('active');
+	activePage(a);
+}
+
+pagination(studentNumber);
+
 
 
 /*---------------------Search----------------------*/
