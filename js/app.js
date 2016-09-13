@@ -5,29 +5,30 @@ var studentNumber = studentList.children.length;
 var pagesNumber;
 var pagesList;
 var studentListlAsArray = Array.prototype.slice.call(studentList.children);
+var details = document.getElementsByClassName('student-details');
+var ul = document.createElement('ul');
+var btn =document.getElementsByTagName('button')[0];
+var input = document.getElementsByTagName('input')[0];
 
-//studentListlAsArray.style.display = 'none';
-
-//studentList.style.display = 'none';
-
-function activePage(){
-
-	for(var i=0; i<pagesList; i++){
-
-	}
-
-}
-
-for(var i=10; i<studentNumber; i++){
-
-	studentList.children[i].style.display = 'none';
-}
 
 function calculatePagesNumber(students){
 	console.log(students);
 	pagesNumber = Math.ceil(studentNumber/10);
 
 }
+
+function initialDisplay(){
+     
+     for(var i=0; i<studentNumber; i++){
+        studentList.children[i].style.display = 'none';
+    }
+    
+    for(var i=0; i<10; i++){
+        studentList.children[i].style.display = 'block';
+    }
+    $('.pagination li a').first().addClass('active');
+}
+
 
 function pagination(studentNumber){
 
@@ -41,27 +42,42 @@ function pagination(studentNumber){
 
 		var page = document.createElement('li');
 		var linkNumber = document.createElement('a');
+        linkNumber.setAttribute('href', '#')
 		var number = document.createTextNode(i+1);
 		linkNumber.appendChild(number);
 		page.appendChild(linkNumber);
 		pagesList.appendChild(page);
 		mainPage.appendChild(pagesList);
 	}
-	//$('.pagination li a').first().addClass('active');
-	var a = document.getElementsByClassName('pagination')[0].children[0].querySelector('a');
-	a.classList.add('active');
-	activePage(a);
+    
+   initialDisplay();
 }
 
-pagination(studentNumber);
 
+$('.pagination li a').click(function(){
+
+    $('.pagination').find('a').removeClass('active');
+    $(this).addClass('active');
+    
+    
+    //console.log(pageNumber);
+    
+    for(var i=0; i<studentNumber; i++){
+        studentList.children[i].style.display = 'none';
+    }
+    
+    var pageNumber = parseInt($(this).text());
+    var start = (pageNumber * 10) - 10;
+    var end = (pageNumber * 10);
+    
+    for(var i=start; i<end; i++){
+        studentList.children[i].style.display = 'block';
+    }
+    
+});
 
 
 /*---------------------Search----------------------*/
-
-var details = document.getElementsByClassName('student-details');
-var studentList = document.getElementsByClassName('student-list')[0];
-var ul = document.createElement('ul');
 
 btn.onclick = function(){
     
@@ -85,11 +101,9 @@ btn.onclick = function(){
     studentList.style.display = 'none';
     document.getElementsByClassName('page')[0].appendChild(ul);
     ul.setAttribute = ('class', 'student-list');
-    //ul.style.display = 'block';
-    //numberOfStudents = count;
     
 }
 
 
 
-
+pagination(studentNumber);
