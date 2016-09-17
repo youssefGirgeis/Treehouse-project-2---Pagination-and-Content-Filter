@@ -37,11 +37,9 @@ function pagination(studentNumber){
 	calculatePagesNumber(studentNumber);
 
 	pagesList = document.createElement('ul');
-	//document.body.appendChild(pagesList);
 	pagesList.setAttribute('class', 'pagination');
 
 	for(var i=0; i<pagesNumber; i++){
-
 		var page = document.createElement('li');
 		var linkNumber = document.createElement('a');
         linkNumber.setAttribute('href', '#')
@@ -52,18 +50,26 @@ function pagination(studentNumber){
 		mainPage.appendChild(pagesList);
 	}
     pagesNumbersList = document.querySelectorAll('ul li a');
-   initialDisplay();
+    initialDisplay();
 }
 
 function activePage(item){
     item.onclick = function(){
-        //console.log(parseInt(this.innerHTML) + 3);
          for(var i=0; i<studentNumber; i++){
             studentList.children[i].style.display = 'none';
         }
-        var pageNumber = parseInt(this.innerHTML);
         
+        for(var i=0; i<pagesNumbersList.length; i++){
+            pagesNumbersList[i].classList.remove('class', 'active');
+        }
         
+        item.classList.add('active');
+        var pageNumber = parseInt(item.innerHTML);
+        var start = (pageNumber * 10) - 10;
+        var end = (pageNumber * 10);
+        for(var i=start; i<end; i++){
+            studentList.children[i].style.display = 'block';
+        }
     }
 }
 
