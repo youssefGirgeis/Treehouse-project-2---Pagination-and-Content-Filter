@@ -26,7 +26,9 @@ function initialDisplay(){
     for(var i=0; i<10; i++){
         studentList.children[i].style.display = 'block';
     }
-    $('.pagination li a').first().addClass('active');
+    //$('.pagination li a').first().addClass('active');
+    var a = document.querySelectorAll('ul li a');
+    a[0].classList.add('active');
 }
 
 
@@ -52,58 +54,8 @@ function pagination(studentNumber){
     
    initialDisplay();
 }
-
-
-$('.pagination li a').click(function(){
-
-    $('.pagination').find('a').removeClass('active');
-    $(this).addClass('active');
-    
-    
-    //console.log(pageNumber);
-    
-    for(var i=0; i<studentNumber; i++){
-        studentList.children[i].style.display = 'none';
-    }
-    
-    var pageNumber = parseInt($(this).text());
-    var start = (pageNumber * 10) - 10;
-    var end = (pageNumber * 10);
-    
-    for(var i=start; i<end; i++){
-        studentList.children[i].style.display = 'block';
-    }
-    
-});
-
-
-/*---------------------Search----------------------*/
-
-btn.onclick = function(){
-    
-    var count =0;
-    //studentList.style.display = 'none';
-    for(var i=0; i<studentList.children.length; i++){
-        //console.log(details[i].children[1].innerHTML);
-        var studentName = details[i].children[1].innerHTML;
-        if(studentName.indexOf(input.value) !== -1){
-            console.log(studentName);
-            count++;
-            var studentItem = studentList.children[i];
-            studentItem.style.display = 'block';
-            ul.appendChild(studentItem);
-            
-            //studentList.children[i].style.display = 'block';
-        }else{
-            //studentList.children[i].style.display = 'none';
-        }
-    }
-    studentList.style.display = 'none';
-    document.getElementsByClassName('page')[0].appendChild(ul);
-    ul.setAttribute = ('class', 'student-list');
-    
-}
-
-
-
 pagination(studentNumber);
+
+
+
+
