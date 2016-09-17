@@ -4,11 +4,11 @@ var studentList = document.getElementsByClassName('student-list')[0];
 var studentNumber = studentList.children.length;
 var pagesNumber;
 var pagesList;
-var studentListlAsArray = Array.prototype.slice.call(studentList.children);
 var details = document.getElementsByClassName('student-details');
 var ul = document.createElement('ul');
 var btn =document.getElementsByTagName('button')[0];
 var input = document.getElementsByTagName('input')[0];
+var pagesNumbersList;
 
 
 function calculatePagesNumber(students){
@@ -51,10 +51,26 @@ function pagination(studentNumber){
 		pagesList.appendChild(page);
 		mainPage.appendChild(pagesList);
 	}
-    
+    pagesNumbersList = document.querySelectorAll('ul li a');
    initialDisplay();
 }
+
+function activePage(item){
+    item.onclick = function(){
+        //console.log(parseInt(this.innerHTML) + 3);
+         for(var i=0; i<studentNumber; i++){
+            studentList.children[i].style.display = 'none';
+        }
+        var pageNumber = parseInt(this.innerHTML);
+        
+        
+    }
+}
+
+
 pagination(studentNumber);
+pagesNumbersList.forEach(activePage);
+
 
 
 
