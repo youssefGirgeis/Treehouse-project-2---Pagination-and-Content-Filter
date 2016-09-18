@@ -20,10 +20,8 @@ function calculatePagesNumber(students){
 
 function initialDisplay(students){
     studentNumber = students;
-    counter++;
-    if(counter >=2){
-        studentList = ul;
-    }
+    console.log('intit');
+
      for(var i=0; i<students; i++){
         studentList.children[i].style.display = 'none';
     }
@@ -31,7 +29,6 @@ function initialDisplay(students){
     for(var i=0; i<10; i++){
         studentList.children[i].style.display = 'block';
     }
-    //$('.pagination li a').first().addClass('active');
     var a = document.querySelectorAll('ul li a');
     a[0].classList.add('active');
 }
@@ -81,25 +78,24 @@ function activePage(item){
 
 function search(){
     for(var i=0; i<studentList.children.length; i++){
-        //console.log(details[i].children[1].innerHTML);
         var studentName = details[i].children[1].innerHTML;
-        if(studentName.indexOf(input.value) !== -1){
-            console.log(studentName);
-            //counter++;
-            var studentItem = studentList.children[i];
+        var studentItem = studentList.children[i];
+        if(studentName.indexOf(input.value.toLowerCase()) !== -1 && input.value.length !== 0){
             studentItem.style.display = 'block';
-            ul.appendChild(studentItem);
             
         }else{
-            //studentList.children[i].style.display = 'none';
+            studentList.children[i].style.display = 'none';
         }
     }
-    //studentList = ul;
-    studentList.style.display = 'none';
-    mainPage.removeChild(pagesList);
-    mainPage.appendChild(ul);
-    //ul.setAttribute = ('class', 'student-list');
-    pagination(ul.children.length);
+    
+    if(input.value === ""){
+        studentList.style.display = 'block';
+        pagination(studentList.children.length);
+        
+    }else{
+        studentList.style.display = 'block';
+        mainPage.removeChild(pagesList);
+    }
 }
 
 btn.addEventListener('click', search);
