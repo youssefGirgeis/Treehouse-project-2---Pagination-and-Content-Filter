@@ -99,6 +99,8 @@ function search(){
 }
 
 btn.addEventListener('click', search);
+input.addEventListener('keydown', search);
+
 pagination(studentNumber);
 
 
