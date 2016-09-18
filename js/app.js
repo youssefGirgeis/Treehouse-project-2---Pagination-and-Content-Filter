@@ -9,17 +9,22 @@ var ul = document.createElement('ul');
 var btn =document.getElementsByTagName('button')[0];
 var input = document.getElementsByTagName('input')[0];
 var pagesNumbersList;
+var counter = 0;
 
 
 function calculatePagesNumber(students){
 	console.log(students);
-	pagesNumber = Math.ceil(studentNumber/10);
-
+	pagesNumber = Math.ceil(students/10);
+    console.log(pagesNumber);
 }
 
-function initialDisplay(){
-     
-     for(var i=0; i<studentNumber; i++){
+function initialDisplay(students){
+    studentNumber = students;
+    counter++;
+    if(counter >=2){
+        studentList = ul;
+    }
+     for(var i=0; i<students; i++){
         studentList.children[i].style.display = 'none';
     }
     
@@ -32,9 +37,9 @@ function initialDisplay(){
 }
 
 
-function pagination(studentNumber){
+function pagination(students){
 
-	calculatePagesNumber(studentNumber);
+	calculatePagesNumber(students);
 
 	pagesList = document.createElement('ul');
 	pagesList.setAttribute('class', 'pagination');
@@ -50,7 +55,8 @@ function pagination(studentNumber){
 		mainPage.appendChild(pagesList);
 	}
     pagesNumbersList = document.querySelectorAll('ul li a');
-    initialDisplay();
+    pagesNumbersList.forEach(activePage);
+    initialDisplay(students);
 }
 
 function activePage(item){
@@ -73,9 +79,32 @@ function activePage(item){
     }
 }
 
+function search(){
+    for(var i=0; i<studentList.children.length; i++){
+        //console.log(details[i].children[1].innerHTML);
+        var studentName = details[i].children[1].innerHTML;
+        if(studentName.indexOf(input.value) !== -1){
+            console.log(studentName);
+            //counter++;
+            var studentItem = studentList.children[i];
+            studentItem.style.display = 'block';
+            ul.appendChild(studentItem);
+            
+        }else{
+            //studentList.children[i].style.display = 'none';
+        }
+    }
+    //studentList = ul;
+    studentList.style.display = 'none';
+    mainPage.removeChild(pagesList);
+    mainPage.appendChild(ul);
+    //ul.setAttribute = ('class', 'student-list');
+    pagination(ul.children.length);
+}
 
+btn.addEventListener('click', search);
 pagination(studentNumber);
-pagesNumbersList.forEach(activePage);
+
 
 
 
