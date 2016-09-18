@@ -40,6 +40,7 @@ function pagination(students){
 
 	pagesList = document.createElement('ul');
 	pagesList.setAttribute('class', 'pagination');
+    mainPage.appendChild(pagesList);
 
 	for(var i=0; i<pagesNumber; i++){
 		var page = document.createElement('li');
@@ -76,17 +77,27 @@ function activePage(item){
     }
 }
 
-function search(){
+/*function search(){
+    var matchedStudents = 0;
     for(var i=0; i<studentList.children.length; i++){
         var studentName = details[i].children[1].innerHTML;
         var studentItem = studentList.children[i];
         if(studentName.indexOf(input.value.toLowerCase()) !== -1 && input.value.length !== 0){
             studentItem.style.display = 'block';
+            matchedStudents++;
+            
             
         }else{
             studentList.children[i].style.display = 'none';
         }
     }
+    
+    if(matchedStudents > 10){
+        console.log(matchedStudents);
+        mainPage.removeChild(pagesList);
+        pagination(matchedStudents);
+    }
+    //pagination(matchedStudents);
     
     if(input.value === ""){
         studentList.style.display = 'block';
@@ -94,12 +105,53 @@ function search(){
         
     }else{
         studentList.style.display = 'block';
-        mainPage.removeChild(pagesList);
+        
+        //pagination(matchedStudents);
     }
 }
 
-btn.addEventListener('click', search);
-input.addEventListener('keydown', search);
+btn.addEventListener('click', search);*/
+
+function search(){
+    //console.log(input.value)
+    
+    var matchedStudents = 0;
+    for(var i =0; i<studentList.children.length; i++){
+        var studentName = details[i].children[1].innerHTML;
+        var studentItem = studentList.children[i];
+        
+        if(studentName.indexOf(input.value) !== -1 && input.value.length !== 0){
+            console.log(studentName);
+            studentItem.style.display = 'block';
+            matchedStudents++;
+        
+        }else{
+            studentItem.style.display = 'none';
+        }
+        
+    }
+    searchPagination(matchedStudents);
+    
+    /*---- for pagination -----*/
+    
+/*    for(var i=0; i<studentList.children.length; i++){
+        studentItem = studentList.children[i]
+        if(studentItem.hasAttribute('display', block))
+    }*/
+}
+    
+function searchPagination(matchedStudents){
+    //console.log(matchedStudents);
+    if(matchedStudents < 10){
+        mainPage.removeChild(pagesList);
+    }else if(matchedStudents > 10){
+        mainPage.removeChild(pagesList);
+        pagination(matchedStudents);
+    }
+}
+
+
+input.addEventListener('keyup', search);
 
 pagination(studentNumber);
 
